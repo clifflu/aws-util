@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from lib import *
@@ -23,7 +22,7 @@ REGION = 'us-west-1'
 LC = {
   'name': '%s_%s' % (NAME, TS_ISO),
   'image_id': "ami-f686adb3",
-  'security_groups': ['sg-8d17f6e2'], # SG, ID only, managed elsewhere
+  'security_groups': ['sg-021eff6d'], # SG, ID only, managed elsewhere
   'instance_type': 't1.micro',
   'instance_monitoring': False,
 }
@@ -38,7 +37,7 @@ ASG = {
   'group_name': NAME, # Auto Scaling Group name
   'load_balancers': [NAME], # ELB, managed elseware
   'availability_zones': ['us-west-1a'],
-  'vpc_zone_identifier': 'subnet-b25e23da',
+  'vpc_zone_identifier': 'subnet-7c0e7114',
   'launch_config':lc,
   'health_check_type': 'ELB',
   'health_check_period': 60,
@@ -70,29 +69,27 @@ ASG_TAGS = [
     'key': 'Name',
     'value': '[a] %s' % NAME,
     'propagate_at_launch': True,
-    'resource_id': ASG['group_name'],
-  }, 
+  },
   {
     'key': 'serves',
     'value': 'shared',
     'propagate_at_launch': True,
-    'resource_id': ASG['group_name'],
-  }, 
+  },
   {
     'key': 'stage',
     'value': 'dev',
     'propagate_at_launch': True,
-    'resource_id': ASG['group_name'],
-  }, 
+  },
   {
     'key': 'Role',
     'value': 'web',
     'propagate_at_launch': True,
-    'resource_id': ASG['group_name'],
-  }, 
+  },
 ]
-
-conn.create_or_update_tags([Tag(**x) for x in ASG_TAGS])
+tags = [
+    Tag(**dict(x.items() + [('resource_id', ASG['group_name'])])) for x in ASG_TAGS
+]
+conn.create_or_update_tags(tags)
 
 #
 # Triggers (Scaling Policy / Cloudwatch Alarm)
@@ -113,11 +110,11 @@ TRIGGERS = [
     'alarm': {
       'name':'%s-down' % NAME,
       'namespace': 'AWS/EC2',
-      'metric': 'CPUUtilization', 
+      'metric': 'CPUUtilization',
       'statistic': 'Average',
       'comparison' : '<=',
       'threshold': '30',
-      'period': '60', 
+      'period': '60',
       'evaluation_periods': '2',
       'alarm_actions': None,
       'dimensions': alarm_dim,
@@ -135,11 +132,11 @@ TRIGGERS = [
     'alarm': {
       'name':'%s-up' % NAME,
       'namespace': 'AWS/EC2',
-      'metric': 'CPUUtilization', 
+      'metric': 'CPUUtilization',
       'statistic': 'Average',
       'comparison' : '>=',
       'threshold': '80',
-      'period': '60', 
+      'period': '60',
       'evaluation_periods': '1',
       'alarm_actions': None,
       'dimensions': alarm_dim,
@@ -151,7 +148,7 @@ for T in TRIGGERS:
   # Policies are safely overwritten, so not checked for existence
   conn.create_scaling_policy(ScalingPolicy(**T['policy']))
   policy = conn.get_all_policies(as_group=ASG['group_name'], policy_names=[T['policy']['name']])[0]
-  
+
   T['alarm']['alarm_actions'] = [policy.policy_arn]
   hits = conn_cw.describe_alarms(alarm_names=[T['alarm']['name']])
 
