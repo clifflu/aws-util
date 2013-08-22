@@ -22,7 +22,7 @@ REGION = 'us-west-1'
 #
 LC = {
   'name': '%s_%s' % (NAME, TS_ISO),
-  'image_id': "ami-f25d77b7",
+  'image_id': "ami-b03913f5",
   'security_groups': ['sg-021eff6d'], # SG, ID only, managed elsewhere
   'instance_type': 't1.micro',
   'instance_monitoring': False,
