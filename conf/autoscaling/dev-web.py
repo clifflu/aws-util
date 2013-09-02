@@ -27,7 +27,6 @@ CONF = {
   },
   'ASG_TAGS': [
     {'key': 'Name', 'value': '[a] %(name)s'},
-    {'key': 'serves', 'value': 'shared'},
     {'key': 'stage', 'value': 'dev'},
     {'key': 'role', 'value': 'web'},
   ],
