@@ -29,7 +29,7 @@ CONF = {
     {'key': 'Name', 'value': '[a] %(name)s'},
     {'key': 'serves', 'value': 'shared'},
     {'key': 'stage', 'value': 'dev'},
-    {'key': 'Role', 'value': 'web'},
+    {'key': 'role', 'value': 'web'},
   ],
   'TRIGGERS': [
     {
