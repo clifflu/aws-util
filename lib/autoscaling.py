@@ -59,8 +59,8 @@ def setup(CONF):
   for i in ASG_TAGS:
     if 'propagate_at_launch' not in i:
       i['propagate_at_launch'] = True
-    i.key = i.key % lookup_tbl
-    i.value = i.value % lookup_tbl
+    i['key'] = i['key'] % lookup_tbl
+    i['value'] = i['value'] % lookup_tbl
 
   tags = [
       Tag(**dict(x.items() + [('resource_id', ASG['group_name'])])) for x in ASG_TAGS
@@ -68,7 +68,7 @@ def setup(CONF):
   conn.create_or_update_tags(tags)
 
   # Triggers (Scaling Policy / Cloudwatch Alarm)
-  conn_cw = connect_to_region(REGION)
+  conn_cw = connect_to_region(CONF['REGION'])
 
   TRIGGERS = CONF['TRIGGERS']
   for T in TRIGGERS:

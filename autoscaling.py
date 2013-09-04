@@ -10,8 +10,7 @@ PROFILES = [
 
 for P in PROFILES:
   ns = importlib.import_module('conf.autoscaling.%s' % P)
-  try:
-    conf = ns.CONF
-    print('Executing %s' % P)
-    lib.autoscaling.setup(ns.CONF)
-  except: pass
+  
+  conf = ns.CONF
+  print('Executing %s' % P)
+  lib.autoscaling.setup(ns.CONF)
