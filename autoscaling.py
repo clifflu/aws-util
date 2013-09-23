@@ -6,6 +6,7 @@ import lib.autoscaling
 
 PROFILES = [
   'dev-web',
+  'prod-web',
 ]
 
 for P in PROFILES:

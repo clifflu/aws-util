@@ -2,25 +2,24 @@
 from lib import TS_ISO
 
 CONF = {
-  'NAME': 'dev-web',
+  'NAME': 'prod-web',
   'REGION': 'us-west-1',
-  'BRANCH': 'develop',
 
   # Launch Configuration
   'LC': {
     'name': '%(name)s_' + TS_ISO,
     'image_id': 'ami-7481b431',
-    'security_groups': ['sg-021eff6d'], # SG, ID only, managed elsewhere
-    'instance_type': 't1.micro',
+    'security_groups': ['sg-7eed0f11'], # SG, ID only, managed elsewhere
+    'instance_type': 'm1.small',
     'instance_monitoring': False,
-    'user_data': '#!/bin/sh\n/data/bin/update_project.sh dev',
+    'user_data': '#!/bin/sh\n/data/bin/update_project.sh prod',
   },
   # Auto Scaling Group
   'ASG': {
     'group_name': "%(name)s" , # Auto Scaling Group name
-    'load_balancers': ['dev-web'], # ELB, managed elseware
+    'load_balancers': ['prod-web'], # ELB, managed elseware
     'availability_zones': ['us-west-1a'],
-    'vpc_zone_identifier': 'subnet-7c0e7114',
+    'vpc_zone_identifier': 'subnet-8b3517e3',
     'health_check_type': 'ELB',
     'health_check_period': 60,
     'default_cooldown': 60,
@@ -29,7 +28,7 @@ CONF = {
   },
   'ASG_TAGS': [
     {'key': 'Name', 'value': '[a] %(name)s'},
-    {'key': 'stage', 'value': 'dev'},
+    {'key': 'stage', 'value': 'prod'},
     {'key': 'role', 'value': 'web'},
   ],
   'TRIGGERS': [
