@@ -9,7 +9,7 @@ CONF = {
   # Launch Configuration
   'LC': {
     'name': '%(name)s_' + TS_ISO,
-    'image_id': 'ami-7481b431',
+    'image_id': 'ami-9e6450db',
     'security_groups': ['sg-021eff6d'], # SG, ID only, managed elsewhere
     'instance_type': 't1.micro',
     'instance_monitoring': False,
@@ -65,7 +65,7 @@ CONF = {
         'metric': 'CPUUtilization',
         'statistic': 'Average',
         'comparison' : '>=',
-        'threshold': '80',
+        'threshold': '75',
         'period': '60',
         'evaluation_periods': '1',
         'alarm_actions': None,
