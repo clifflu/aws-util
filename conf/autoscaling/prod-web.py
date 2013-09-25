@@ -8,11 +8,11 @@ CONF = {
   # Launch Configuration
   'LC': {
     'name': '%(name)s_' + TS_ISO,
-    'image_id': 'ami-9e6450db',
+    'image_id': 'ami-7a66523f',
     'security_groups': ['sg-7eed0f11'], # SG, ID only, managed elsewhere
     'instance_type': 'm1.small',
     'instance_monitoring': False,
-    'user_data': '#!/bin/sh\n/data/bin/update_project.sh prod',
+    'user_data': '#!/bin/sh\n/data/bin/cloud_init.sh prod',
   },
   # Auto Scaling Group
   'ASG': {
