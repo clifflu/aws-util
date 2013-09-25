@@ -9,7 +9,7 @@ CONF = {
   # Launch Configuration
   'LC': {
     'name': '%(name)s_' + TS_ISO,
-    'image_id': 'ami-7a66523f',
+    'image_id': 'ami-3866527d',
     'security_groups': ['sg-021eff6d'], # SG, ID only, managed elsewhere
     'instance_type': 't1.micro',
     'instance_monitoring': False,
