@@ -9,7 +9,8 @@ CONF = {
   'LC': {
     'name': '%(name)s_' + TS_ISO,
     'image_id': 'ami-0c536749',
-    'security_groups': ['sg-7eed0f11'], # SG, ID only, managed elsewhere
+    # SG, ID only, managed elsewhere
+    'security_groups': ['sg-021eff6d', 'sg-7eed0f11'],
     'instance_type': 'm1.small',
     'instance_monitoring': False,
     'user_data': '#!/bin/sh\n/data/bin/cloud_init.sh prod',
